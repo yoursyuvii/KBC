@@ -1,5 +1,399 @@
+/* file: src/app.css */
+
+.app {
+  /* Changed height to min-height for better mobile compatibility */
+  min-height: 100vh;
+  display: flex;
+  color: white;
+  background-color: #020230;
+}
+
+.main {
+  width: 75%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #020230),
+    url("assets/bg.jpg") center;
+  display: flex;
+  flex-direction: column;
+}
+
+.pyramid {
+  width: 25%;
+  background-color: #020230;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moneyList {
+  padding: 20px;
+  list-style: none;
+  width: 100%;
+}
+
+.moneyListItem {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.moneyListItem.active {
+  background-color: teal;
+}
+
+.moneyListItemNumber {
+  width: 30%;
+  font-size: 18px;
+  font-weight: 100;
+}
+
+.moneyListItemAmount {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.top {
+  height: 50%;
+  position: relative;
+}
+
+.timer {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 5px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 80px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.bottom {
+  height: 50%;
+}
+
+.trivia {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.question {
+  width: 80%;
+  background: linear-gradient(#100241, black);
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid white;
+  font-size: 20px;
+}
+
+.answers {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.answer {
+  width: 40%;
+  padding: 10px;
+  margin: 0 10px 20px 10px;
+  text-align: center;
+  background: linear-gradient(#0e0124, #22074d);
+  border: 1px solid white;
+  border-radius: 15px;
+  font-weight: 300;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.answer:hover,
+.answer.active {
+background: rgb(211, 167, 9);
+}
+
+.answer.correct {
+animation: correct 3s ease forwards;
+}
+
+@keyframes correct {
+0%,
+22%,
+42% {
+  background: rgb(211, 167, 9);
+}
+20%,
+40%,
+60% {
+  background: linear-gradient(#0e0124, #22074d);
+}
+62%,
+100% {
+  background: green;
+}
+}
+
+.answer.wrong {
+animation: wrong 3s ease forwards;
+}
+
+@keyframes wrong {
+0%,
+22%,
+42% {
+  background: rgb(211, 167, 9);
+}
+20%,
+40%,
+60% {
+  background: linear-gradient(#0e0124, #22074d);
+}
+62%,
+100% {
+  background: crimson;
+}
+}
+
+.endText {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 10;
+}
+
+.start {
+  width: 320px;
+  height: auto;
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(to bottom, #0e0e6d, #020230);
+  border: 2px solid white;
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.startTitle {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.startInput {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #333;
+  font-weight: 500;
+}
+
+.startInput:focus {
+  outline: 3px solid #ffd700;
+}
+
+.startButton {
+  width: 100%;
+  height: 45px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  color: #020230;
+  background: linear-gradient(to bottom, #ffd700, #f0c400);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.startButton:hover {
+  background: linear-gradient(to bottom, #ffdf33, #f0c400);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
 
 .startButton:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ================================== */
+/* Responsive Styles (Improved)   */
+/* ================================== */
+
+/* For Tablets (992px and below) */
+@media (max-width: 992px) {
+  .main {
+    width: 70%;
+  }
+  .pyramid {
+    width: 30%;
+  }
+  .question {
+    font-size: 18px;
+  }
+  .answer {
+    font-size: 18px;
+  }
+}
+
+
+/* For Mobile devices (768px and below) */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+    /* Allow scrolling on mobile */
+    height: auto;
+  }
+
+  .main {
+    width: 100%;
+    /* Order main content second */
+    order: 2;
+    /* Ensure it has enough space */
+    min-height: 50vh;
+    flex-grow: 1; /* Allow main to grow and fill space */
+  }
+
+  .pyramid {
+    width: 100%;
+    /* Order pyramid on top */
+    order: 1;
+    padding: 10px 0;
+    /* Remove center alignment for a top-aligned list */
+    align-items: flex-start;
+  }
+
+  .moneyList {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: flex-start; /* Align to the start */
+    padding: 10px;
+    /* Enable horizontal scrolling for the money list */
+    overflow-x: auto;
+    /* Hide scrollbar for a cleaner look */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .moneyList::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+  }
+
+
+  .moneyListItem {
+    /* Give items a fixed width so they scroll horizontally */
+    flex: 0 0 130px; /* Do not grow, do not shrink, base width 130px */
+    margin: 2px 5px;
+    padding: 8px;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid #555;
+    transition: transform 0.2s ease;
+  }
+  
+  .moneyListItem.active {
+    background-color: teal;
+    transform: scale(1.1);
+    border: 1px solid white;
+  }
+
+  .moneyListItemAmount {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .moneyListItemNumber {
+    display: inline-block; /* Show the number again */
+    width: auto;
+    margin-right: 8px;
+    font-weight: 300;
+  }
+
+  .answers {
+    flex-direction: column;
+    align-items: center;
+    /* Add some space on top */
+    margin-top: 10px;
+  }
+
+  .answer {
+    width: 90%;
+    max-width: 400px;
+    margin-bottom: 10px;
+  }
+
+  .timer {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    left: 15px;
+    bottom: 15px;
+    border-width: 3px;
+  }
+
+  .top, .bottom {
+    height: auto;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .trivia {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .question {
+    margin-bottom: 20px;
+  }
+
+  .start {
+    /* Make start modal responsive */
+    width: 90%;
+    max-width: 320px;
+  }
+}
+
+
+/* For very small mobile phones (480px and below) */
+@media (max-width: 480px) {
+  .question {
+    font-size: 16px;
+    padding: 15px;
+    width: 90%;
+  }
+
+  .answer {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .startTitle {
+    font-size: 22px;
+  }
 }
