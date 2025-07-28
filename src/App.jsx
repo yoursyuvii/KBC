@@ -1,16 +1,18 @@
+// file: src/App.jsx
+
 import { useEffect, useMemo, useState } from "react";
 import "./app.css";
 import Trivia from "./components/Trivia";
 import Timer from "./components/Timer";
 import Start from "./components/Start";
+import CelebrationConfetti from "./components/CelebrationConfetti"; // नया कंपोनेंट इम्पोर्ट करें
 
 function App() {
   const [username, setUsername] = useState(null);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [stop, setStop] = useState(false);
-  const [earned, setEarned] = useState("$ 0");
+  const [earned, setEarned] = useState("₹ 0");
 
-  // Yahaan 15 prashna daal diye gaye hain
   const data = [
     {
       id: 1,
@@ -27,8 +29,8 @@ function App() {
       question: "Inmein se kaun sa grah (planet) 'Laal Grah' ke naam se jaana jaata hai?",
       answers: [
         { text: "Shukra (Venus)", correct: false },
-        { text: "Brihaspati (Jupiter)", correct: false },
         { text: "Mangal (Mars)", correct: true },
+        { text: "Brihaspati (Jupiter)", correct: false },
         { text: "Shani (Saturn)", correct: false },
       ],
     },
@@ -48,8 +50,8 @@ function App() {
       answers: [
         { text: "China", correct: false },
         { text: "South Korea", correct: false },
-        { text: "Japan", correct: true },
         { text: "Thailand", correct: false },
+        { text: "Japan", correct: true },
       ],
     },
     {
@@ -57,8 +59,8 @@ function App() {
       question: "Kis Bharatiya sheher ko 'Pink City' kaha jaata hai?",
       answers: [
         { text: "Jodhpur", correct: false },
-        { text: "Udaipur", correct: false },
         { text: "Jaipur", correct: true },
+        { text: "Udaipur", correct: false },
         { text: "Bikaner", correct: false },
       ],
     },
@@ -88,8 +90,8 @@ function App() {
       answers: [
         { text: "Anuchhed 15", correct: false },
         { text: "Anuchhed 16", correct: false },
-        { text: "Anuchhed 17", correct: true },
         { text: "Anuchhed 18", correct: false },
+        { text: "Anuchhed 17", correct: true },
       ],
     },
     {
@@ -106,9 +108,9 @@ function App() {
       id: 10,
       question: "Mount Everest par chadhne waali pehli Bharatiya mahila kaun thi?",
       answers: [
+        { text: "Bachendri Pal", correct: true },
         { text: "Arunima Sinha", correct: false },
         { text: "Premlata Agarwal", correct: false },
-        { text: "Bachendri Pal", correct: true },
         { text: "Santosh Yadav", correct: false },
       ],
     },
@@ -154,12 +156,12 @@ function App() {
     },
     {
       id: 15,
-      question: "Sirf ek hi din ke liye Bharat ke Governor-General kaun bane the?",
+      question: "Saurabh Kumar Roy Param Mitr kon hai?(only TITians Knows)",
       answers: [
-        { text: "Lord Mountbatten", correct: false },
-        { text: "C. Rajagopalachari", correct: false },
-        { text: "Yeh ek trick question hai", correct: true },
-        { text: "Lord Linlithgow", correct: false },
+        { text: "Yuvraj Singh", correct: false },
+        { text: "Sagar Sharma", correct: true },
+        { text: "Soumya Pateriya", correct: false },
+        { text: "Sarthak Rathore", correct: false },
       ],
     },
   ];
@@ -203,7 +205,10 @@ function App() {
         <>
           <div className="main">
             {stop ? (
-              <h1 className="endText">You earned: {earned}</h1>
+              <>
+                <CelebrationConfetti />
+                <h1 className="endText">You earned: {earned}</h1>
+              </>
             ) : (
               <>
                 <div className="top">
