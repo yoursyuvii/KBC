@@ -12,8 +12,13 @@ function App() {
   const [questionNumber, setQuestionNumber] = useState(1);
   const [stop, setStop] = useState(false);
   const [earned, setEarned] = useState("₹ 0");
-  // State to store the correct answer text on game over
   const [correctAnswerText, setCorrectAnswerText] = useState(null);
+
+  // Lifelines State
+  const [lifelines, setLifelines] = useState({
+    fiftyFifty: 1, // 1 means available, 0 means used
+  });
+  const [fiftyFiftyTrigger, setFiftyFiftyTrigger] = useState(false);
 
   const data = [
     {
@@ -158,12 +163,12 @@ function App() {
     },
     {
       id: 15,
-      question: "Who is the Param Mitra of Saurabh Kumar Roy?",
+      question: "Who was the first governor of the Reserve Bank of India (RBI)?",
       answers: [
-        { text: "Yuvraj Singh", correct: false },
-        { text: "Sagar Sharma", correct: true },
-        { text: "Saumya pateriya", correct: false },
-        { text: "Riya Teepa", correct: false },
+        { text: "C. D. Deshmukh", correct: false },
+        { text: "Sir Osborne Smith", correct: true },
+        { text: "Raghuram Rajan", correct: false },
+        { text: "Manmohan Singh", correct: false },
       ],
     },
   ];
@@ -199,13 +204,10 @@ function App() {
     }
   }, [questionNumber, moneyPyramid]);
 
-  // This effect runs when the game stops
   useEffect(() => {
     if (stop && questionNumber > 0) {
-      // Find the question the user failed on
       const currentQuestion = data.find(q => q.id === questionNumber);
       if (currentQuestion) {
-        // Find the correct answer from that question's answers
         const correctAnswer = currentQuestion.answers.find(ans => ans.correct);
         if (correctAnswer) {
           setCorrectAnswerText(correctAnswer.text);
@@ -214,13 +216,23 @@ function App() {
     }
   }, [stop, questionNumber, data]);
 
-  // This effect checks for the win condition
   useEffect(() => {
-    // Agar prashna sankhya 15 se zyada ho jaye, iska matlab khiladi jeet gaya hai.
     if (questionNumber > 15) {
       setStop(true);
     }
   }, [questionNumber]);
+
+  // Reset fifty-fifty trigger for new question
+  useEffect(() => {
+    setFiftyFiftyTrigger(false);
+  }, [questionNumber]);
+
+  const handleFiftyFifty = () => {
+    if (lifelines.fiftyFifty > 0 && !fiftyFiftyTrigger) {
+      setLifelines(prev => ({ ...prev, fiftyFifty: 0 }));
+      setFiftyFiftyTrigger(true);
+    }
+  };
 
   return (
     <div className="app">
@@ -245,6 +257,14 @@ function App() {
                   <div className="timer">
                     <Timer setStop={setStop} questionNumber={questionNumber} />
                   </div>
+                  <div className="lifelines">
+                    <div 
+                      className={`lifeline ${lifelines.fiftyFifty === 0 && 'used'}`}
+                      onClick={handleFiftyFifty}
+                    >
+                      50:50
+                    </div>
+                  </div>
                 </div>
                 <div className="bottom">
                   <Trivia
@@ -252,6 +272,7 @@ function App() {
                     setStop={setStop}
                     questionNumber={questionNumber}
                     setQuestionNumber={setQuestionNumber}
+                    fiftyFiftyTrigger={fiftyFiftyTrigger}
                   />
                 </div>
               </>

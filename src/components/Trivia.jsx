@@ -1,3 +1,5 @@
+// file: src/components/Trivia.jsx
+
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
 import play from "../assets/play.wav";
@@ -10,50 +12,70 @@ export default function Trivia({
     setStop,
     questionNumber,
     setQuestionNumber,
+    fiftyFiftyTrigger, // Prop to know when to apply 50:50
 }) {
     const [question, setQuestion] = useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [className, setClassName] = useState("answer");
+    const [answers, setAnswers] = useState([]);
 
     const [letsPlay] = useSound(play);
-    const [correctAnswer] = useSound(correct);
-    const [wrongAnswer] = useSound(wrong);
+    const [correctAnswerSound] = useSound(correct);
+    const [wrongAnswerSound] = useSound(wrong);
     const [waitSound, { stop: stopWaitSound }] = useSound(wait);
 
     useEffect(() => {
-        // Jab bhi naya prashna aaye...
-        setQuestion(data[questionNumber - 1]);
-        // "Naya prashna" sound bajayein
+        const currentQuestion = data[questionNumber - 1];
+        setQuestion(currentQuestion);
+        setAnswers(currentQuestion.answers); // Set initial answers
         letsPlay();
-        // Aur "timer/suspense" sound shuru karein
         waitSound();
     }, [data, questionNumber, letsPlay, waitSound]);
+
+    // This effect handles the 50:50 lifeline
+    useEffect(() => {
+        if (fiftyFiftyTrigger && question) {
+            const correctAnswer = question.answers.find(a => a.correct);
+            const incorrectAnswers = question.answers.filter(a => !a.correct);
+            
+            // Randomly pick one incorrect answer to keep
+            const randomIncorrect = incorrectAnswers[Math.floor(Math.random() * incorrectAnswers.length)];
+            
+            // Create the new set of answers (correct + one incorrect)
+            const newAnswers = [correctAnswer, randomIncorrect].sort(() => Math.random() - 0.5);
+            
+            setAnswers(newAnswers);
+        }
+    }, [fiftyFiftyTrigger, question]);
+
 
     const delay = (duration, callback) => {
         setTimeout(callback, duration);
     };
 
     const handleClick = (a) => {
+        if (selectedAnswer) return; // Prevent clicking after an answer is selected
+
         setSelectedAnswer(a);
         setClassName("answer active");
-        // Answer click karte hi "suspense" sound band kar dein
         stopWaitSound();
 
-        // Jawaab verify karne ke liye delay
         delay(3000, () => {
             if (a.correct) {
                 setClassName("answer correct");
-                correctAnswer();
-                // Agla prashna laane se pehle delay
-                delay(3000, () => {
-                    setQuestionNumber((prev) => prev + 1);
-                    setSelectedAnswer(null);
+                correctAnswerSound();
+                delay(2000, () => {
+                    if (questionNumber === 15) {
+                        setStop(true);
+                    } else {
+                        setQuestionNumber((prev) => prev + 1);
+                        setSelectedAnswer(null);
+                    }
                 });
             } else {
                 setClassName("answer wrong");
-                wrongAnswer();
-                // Game stop karne se pehle delay
-                delay(2000, () => {
+                wrongAnswerSound();
+                delay(1000, () => {
                     setStop(true);
                 });
             }
@@ -64,11 +86,11 @@ export default function Trivia({
         <div className="trivia">
             <div className="question">{question?.question}</div>
             <div className="answers">
-                {question?.answers.map((a, index) => (
+                {answers.map((a, index) => (
                     <div
                         key={index}
                         className={selectedAnswer === a ? className : "answer"}
-                        onClick={() => !selectedAnswer && handleClick(a)}
+                        onClick={() => handleClick(a)}
                     >
                         {a.text}
                     </div>

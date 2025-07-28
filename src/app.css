@@ -1,7 +1,6 @@
 /* file: src/app.css */
 
 .app {
-  /* Changed height to min-height for better mobile compatibility */
   min-height: 100vh;
   display: flex;
   color: white;
@@ -71,6 +70,41 @@
   font-size: 30px;
   font-weight: 700;
 }
+
+/* --- Lifeline Styles --- */
+.lifelines {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+.lifeline {
+  width: 80px;
+  height: 40px;
+  border: 2px solid white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.lifeline:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.lifeline.used {
+  background-color: rgba(255, 0, 0, 0.5);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+/* --- End Lifeline Styles --- */
 
 .bottom {
   height: 50%;
@@ -161,7 +195,6 @@ animation: wrong 3s ease forwards;
 }
 }
 
-/* Styles for the final screen */
 .endScreenContainer {
   display: flex;
   flex-direction: column;
@@ -175,7 +208,7 @@ animation: wrong 3s ease forwards;
 }
 
 .endText {
-  position: static; /* Removed old positioning */
+  position: static;
   z-index: 10;
   margin-bottom: 20px;
   font-size: 32px;
@@ -184,7 +217,7 @@ animation: wrong 3s ease forwards;
 .correctAnswerText {
   font-size: 24px;
   font-weight: 500;
-  color: #ffdd57; /* Gold color for the correct answer */
+  color: #ffdd57;
   z-index: 10;
 }
 
@@ -263,7 +296,6 @@ animation: wrong 3s ease forwards;
 /* Responsive Styles (Improved)   */
 /* ================================== */
 
-/* For Tablets (992px and below) */
 @media (max-width: 992px) {
   .main {
     width: 70%;
@@ -279,52 +311,41 @@ animation: wrong 3s ease forwards;
   }
 }
 
-
-/* For Mobile devices (768px and below) */
 @media (max-width: 768px) {
   .app {
     flex-direction: column;
-    /* Allow scrolling on mobile */
     height: auto;
   }
 
   .main {
     width: 100%;
-    /* Order main content second */
     order: 2;
-    /* Ensure it has enough space */
     min-height: 50vh;
-    flex-grow: 1; /* Allow main to grow and fill space */
+    flex-grow: 1;
   }
 
   .pyramid {
     width: 100%;
-    /* Order pyramid on top */
     order: 1;
     padding: 10px 0;
-    /* Remove center alignment for a top-aligned list */
     align-items: flex-start;
   }
 
   .moneyList {
     display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    justify-content: flex-start; /* Align to the start */
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     padding: 10px;
-    /* Enable horizontal scrolling for the money list */
     overflow-x: auto;
-    /* Hide scrollbar for a cleaner look */
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   .moneyList::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, and Opera */
+    display: none;
   }
 
-
   .moneyListItem {
-    /* Give items a fixed width so they scroll horizontally */
-    flex: 0 0 130px; /* Do not grow, do not shrink, base width 130px */
+    flex: 0 0 130px;
     margin: 2px 5px;
     padding: 8px;
     justify-content: center;
@@ -345,7 +366,7 @@ animation: wrong 3s ease forwards;
   }
   
   .moneyListItemNumber {
-    display: inline-block; /* Show the number again */
+    display: inline-block;
     width: auto;
     margin-right: 8px;
     font-weight: 300;
@@ -354,7 +375,6 @@ animation: wrong 3s ease forwards;
   .answers {
     flex-direction: column;
     align-items: center;
-    /* Add some space on top */
     margin-top: 10px;
   }
 
@@ -391,14 +411,21 @@ animation: wrong 3s ease forwards;
   }
 
   .start {
-    /* Make start modal responsive */
     width: 90%;
     max-width: 320px;
   }
+  
+  .lifelines {
+    top: 10px;
+    right: 10px;
+  }
+  .lifeline {
+    width: 60px;
+    height: 30px;
+    font-size: 14px;
+  }
 }
 
-
-/* For very small mobile phones (480px and below) */
 @media (max-width: 480px) {
   .endText {
     font-size: 28px;
