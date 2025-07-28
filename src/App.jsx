@@ -18,152 +18,152 @@ function App() {
   const data = [
     {
       id: 1,
-      question: "Aam taur par, inmein se kis tyohaar ke dauraan 'garba' nritya kiya jaata hai?",
+      question: "Which of these is a popular social media app?",
       answers: [
-        { text: "Holi", correct: false },
-        { text: "Diwali", correct: false },
-        { text: "Navratri", correct: true },
-        { text: "Baisakhi", correct: false },
+        { text: "Radio", correct: false },
+        { text: "Television", correct: false },
+        { text: "Newspaper", correct: false },
+        { text: "Instagram", correct: true },
       ],
     },
     {
       id: 2,
-      question: "Inmein se kaun sa grah (planet) 'Laal Grah' ke naam se jaana jaata hai?",
+      question: "According to the Ramayana, who among these was the brother of Ravana, the king of Lanka?",
       answers: [
-        { text: "Shukra (Venus)", correct: false },
-        { text: "Mangal (Mars)", correct: true },
-        { text: "Brihaspati (Jupiter)", correct: false },
-        { text: "Shani (Saturn)", correct: false },
+        { text: "Meghnad", correct: false },
+        { text: "Vibhishana", correct: true },
+        { text: "Akshayakumara", correct: false },
+        { text: "Sugriva", correct: false },
       ],
     },
     {
       id: 3,
-      question: "Mahatma Gandhi ke raajnaitik guru kaun the?",
+      question: "Which of these colors is not present in the Indian national flag?",
       answers: [
-        { text: "Dadabhai Naoroji", correct: false },
-        { text: "Lala Lajpat Rai", correct: false },
-        { text: "Gopal Krishna Gokhale", correct: true },
-        { text: "Bal Gangadhar Tilak", correct: false },
+        { text: "Saffron", correct: false },
+        { text: "White", correct: false },
+        { text: "Pink", correct: true },
+        { text: "Green", correct: false },
       ],
     },
     {
       id: 4,
-      question: "Inmein se kaun sa desh 'Land of the Rising Sun' ke naam se jaana jaata hai?",
+      question: "Which actor played the character of Gabbar Singh in the film 'Sholay'?",
       answers: [
-        { text: "China", correct: false },
-        { text: "South Korea", correct: false },
-        { text: "Thailand", correct: false },
-        { text: "Japan", correct: true },
+        { text: "Amrish Puri", correct: false },
+        { text: "Amjad Khan", correct: true },
+        { text: "Sanjeev Kumar", correct: false },
+        { text: "Pran", correct: false },
       ],
     },
     {
       id: 5,
-      question: "Kis Bharatiya sheher ko 'Pink City' kaha jaata hai?",
+      question: "Which of these rivers is also known as the 'Ganges of the South'?",
       answers: [
-        { text: "Jodhpur", correct: false },
-        { text: "Jaipur", correct: true },
-        { text: "Udaipur", correct: false },
-        { text: "Bikaner", correct: false },
+        { text: "Krishna", correct: false },
+        { text: "Kaveri", correct: false },
+        { text: "Narmada", correct: false },
+        { text: "Godavari", correct: true },
       ],
     },
     {
       id: 6,
-      question: "'Wings of Fire' kiski aatmakatha (autobiography) hai?",
+      question: "Who was awarded 'Man of the Match' in the 2011 Cricket World Cup final?",
       answers: [
+        { text: "Gautam Gambhir", correct: false },
         { text: "Sachin Tendulkar", correct: false },
-        { text: "A. P. J. Abdul Kalam", correct: true },
-        { text: "Mahatma Gandhi", correct: false },
-        { text: "Jawaharlal Nehru", correct: false },
+        { text: "M. S. Dhoni", correct: true },
+        { text: "Yuvraj Singh", correct: false },
       ],
     },
     {
       id: 7,
-      question: "Chandrayaan-2 mission mein lander ka kya naam tha?",
+      question: "From which ancient Indian scripture is our national motto 'Satyameva Jayate' taken?",
       answers: [
-        { text: "Vikram", correct: true },
-        { text: "Pragyan", correct: false },
-        { text: "Aryabhata", correct: false },
-        { text: "Bhaskara", correct: false },
+        { text: "Rigveda", correct: false },
+        { text: "Bhagavad Gita", correct: false },
+        { text: "Ramayana", correct: false },
+        { text: "Mundaka Upanishad", correct: true },
       ],
     },
     {
       id: 8,
-      question: "Bharat ke Samvidhan ka kaun sa anuchhed (article) asprishyata (untouchability) ko samapt karta hai?",
+      question: "Who was the first non-Indian to be awarded the Bharat Ratna?",
       answers: [
-        { text: "Anuchhed 15", correct: false },
-        { text: "Anuchhed 16", correct: false },
-        { text: "Anuchhed 18", correct: false },
-        { text: "Anuchhed 17", correct: true },
+        { text: "Nelson Mandela", correct: false },
+        { text: "Khan Abdul Ghaffar Khan", correct: true },
+        { text: "Mother Teresa", correct: false },
+        { text: "Dalai Lama", correct: false },
       ],
     },
     {
       id: 9,
-      question: "Dadasaheb Phalke Puraskar kis kshetra mein yogdaan ke liye diya jaata hai?",
+      question: "Which planet in our solar system has the most natural satellites (moons)?",
       answers: [
-        { text: "Khel (Sports)", correct: false },
-        { text: "Sahitya (Literature)", correct: false },
-        { text: "Vigyan (Science)", correct: false },
-        { text: "Cinema", correct: true },
+        { text: "Jupiter", correct: false },
+        { text: "Saturn", correct: true },
+        { text: "Uranus", correct: false },
+        { text: "Neptune", correct: false },
       ],
     },
     {
       id: 10,
-      question: "Mount Everest par chadhne waali pehli Bharatiya mahila kaun thi?",
+      question: "In the context of computers, what is the full form of 'URL'?",
       answers: [
-        { text: "Bachendri Pal", correct: true },
-        { text: "Arunima Sinha", correct: false },
-        { text: "Premlata Agarwal", correct: false },
-        { text: "Santosh Yadav", correct: false },
+        { text: "Universal Request Link", correct: false },
+        { text: "Uniform Resource Locator", correct: true },
+        { text: "United Resource Link", correct: false },
+        { text: "Universal Record Locator", correct: false },
       ],
     },
     {
       id: 11,
-      question: "1868 mein, kisne pehli baar Andaman dweep samuh ka daura kiya tha?",
+      question: "In the Mahabharata, what was the name of Guru Dronacharya's son, who was also a great warrior?",
       answers: [
-        { text: "Lord Mayo", correct: true },
-        { text: "Lord Cornwallis", correct: false },
-        { text: "Lord Lytton", correct: false },
-        { text: "Lord Ripon", correct: false },
+        { text: "Ghatotkacha", correct: false },
+        { text: "Abhimanyu", correct: false },
+        { text: "Ashwatthama", correct: true },
+        { text: "Duryodhana", correct: false },
       ],
     },
     {
       id: 12,
-      question: "Albert Einstein ko Nobel Puraskar kis vishay par unke kaam ke liye mila tha?",
+      question: "Which Indian city is called the 'Queen of the Arabian Sea'?",
       answers: [
-        { text: "Theory of Relativity", correct: false },
-        { text: "Photoelectric Effect", correct: true },
-        { text: "Quantum Mechanics", correct: false },
-        { text: "Brownian Motion", correct: false },
+        { text: "Mumbai", correct: false },
+        { text: "Goa", correct: false },
+        { text: "Kochi", correct: true },
+        { text: "Mangaluru", correct: false },
       ],
     },
     {
       id: 13,
-      question: "Kis Mughal shasak ne apni aatmakatha, 'Tuzuk-i-Baburi', likhi thi?",
+      question: "Who is the author of the famous book 'The Discovery of India'?",
       answers: [
-        { text: "Akbar", correct: false },
-        { text: "Humayun", correct: false },
-        { text: "Babur", correct: true },
-        { text: "Jahangir", correct: false },
+        { text: "Mahatma Gandhi", correct: false },
+        { text: "Sardar Patel", correct: false },
+        { text: "Subhas Chandra Bose", correct: false },
+        { text: "Jawaharlal Nehru", correct: true },
       ],
     },
     {
       id: 14,
-      question: "2011 mein, kis film ne 'Best Feature Film' ka National Award jeeta tha?",
+      question: "What was the name of the lander that successfully landed on the moon in the Chandrayaan-3 mission?",
       answers: [
-        { text: "3 Idiots", correct: false },
-        { text: "My Name is Khan", correct: false },
-        { text: "Dabangg", correct: true },
-        { text: "Peepli Live", correct: false },
+        { text: "Pragyan", correct: false },
+        { text: "Vikram", correct: true },
+        { text: "Aditya", correct: false },
+        { text: "Dhruv", correct: false },
       ],
     },
     {
       id: 15,
-      question: "Saurabh Kumar Roy Param Mitr kon hai?(only TITians Knows)",
+      question: "Who is the Param Mitra of Saurabh Kumar Roy?",
       answers: [
         { text: "Yuvraj Singh", correct: false },
         { text: "Sagar Sharma", correct: true },
-        { text: "Soumya Pateriya", correct: false },
-        { text: "Sarthak Rathore", correct: false },
+        { text: "Saumya pateriya", correct: false },
+        { text: "Riya Teepa", correct: false },
       ],
     },
   ];
@@ -213,6 +213,14 @@ function App() {
       }
     }
   }, [stop, questionNumber, data]);
+
+  // This effect checks for the win condition
+  useEffect(() => {
+    // Agar prashna sankhya 15 se zyada ho jaye, iska matlab khiladi jeet gaya hai.
+    if (questionNumber > 15) {
+      setStop(true);
+    }
+  }, [questionNumber]);
 
   return (
     <div className="app">

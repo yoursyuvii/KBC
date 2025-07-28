@@ -15,14 +15,14 @@ export default function Start({ setUsername }) {
 
   return (
     <div className="start">
-        <h1 className="startTitle">Kaun Banega Crorepati</h1>
+        <h1 className="startTitle">KBC By YUVRAJ</h1>
         <input
-          placeholder="Yahan Apna Naam Likhein"
+          placeholder="Write your good name."
           className="startInput"
           ref={inputRef}
         />
         <button className="startButton" onClick={handleClick}>
-          Khel Shuru Karein
+          START
         </button>
       </div>
   );
