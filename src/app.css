@@ -161,15 +161,33 @@ animation: wrong 3s ease forwards;
 }
 }
 
+/* Styles for the final screen */
+.endScreenContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 .endText {
-  position: relative;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+  position: static; /* Removed old positioning */
+  z-index: 10;
+  margin-bottom: 20px;
+  font-size: 32px;
+}
+
+.correctAnswerText {
+  font-size: 24px;
+  font-weight: 500;
+  color: #ffdd57; /* Gold color for the correct answer */
   z-index: 10;
 }
+
 
 .start {
   width: 320px;
@@ -382,6 +400,13 @@ animation: wrong 3s ease forwards;
 
 /* For very small mobile phones (480px and below) */
 @media (max-width: 480px) {
+  .endText {
+    font-size: 28px;
+  }
+  .correctAnswerText {
+    font-size: 20px;
+    padding: 0 10px;
+  }
   .question {
     font-size: 16px;
     padding: 15px;

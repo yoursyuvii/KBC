@@ -5,13 +5,15 @@ import "./app.css";
 import Trivia from "./components/Trivia";
 import Timer from "./components/Timer";
 import Start from "./components/Start";
-import CelebrationConfetti from "./components/CelebrationConfetti"; // नया कंपोनेंट इम्पोर्ट करें
+import CelebrationConfetti from "./components/CelebrationConfetti";
 
 function App() {
   const [username, setUsername] = useState(null);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [stop, setStop] = useState(false);
   const [earned, setEarned] = useState("₹ 0");
+  // State to store the correct answer text on game over
+  const [correctAnswerText, setCorrectAnswerText] = useState(null);
 
   const data = [
     {
@@ -197,6 +199,21 @@ function App() {
     }
   }, [questionNumber, moneyPyramid]);
 
+  // This effect runs when the game stops
+  useEffect(() => {
+    if (stop && questionNumber > 0) {
+      // Find the question the user failed on
+      const currentQuestion = data.find(q => q.id === questionNumber);
+      if (currentQuestion) {
+        // Find the correct answer from that question's answers
+        const correctAnswer = currentQuestion.answers.find(ans => ans.correct);
+        if (correctAnswer) {
+          setCorrectAnswerText(correctAnswer.text);
+        }
+      }
+    }
+  }, [stop, questionNumber, data]);
+
   return (
     <div className="app">
       {!username ? (
@@ -205,10 +222,15 @@ function App() {
         <>
           <div className="main">
             {stop ? (
-              <>
+              <div className="endScreenContainer">
                 <CelebrationConfetti />
                 <h1 className="endText">You earned: {earned}</h1>
-              </>
+                {correctAnswerText && (
+                  <h2 className="correctAnswerText">
+                    The correct answer was: {correctAnswerText}
+                  </h2>
+                )}
+              </div>
             ) : (
               <>
                 <div className="top">
