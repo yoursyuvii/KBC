@@ -1,5 +1,3 @@
-// file: src/App.jsx
-
 import { useEffect, useMemo, useState } from "react";
 import "./app.css";
 import Trivia from "./components/Trivia";
@@ -14,164 +12,50 @@ function App() {
   const [earned, setEarned] = useState("₹ 0");
   const [correctAnswerText, setCorrectAnswerText] = useState(null);
 
+  // API se data laane ke liye state
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   // Lifelines State
   const [lifelines, setLifelines] = useState({
     fiftyFifty: 1, // 1 means available, 0 means used
   });
   const [fiftyFiftyTrigger, setFiftyFiftyTrigger] = useState(false);
 
-  const data = [
-    {
-      id: 1,
-      question: "Which of these is a popular social media app?",
-      answers: [
-        { text: "Radio", correct: false },
-        { text: "Television", correct: false },
-        { text: "Newspaper", correct: false },
-        { text: "Instagram", correct: true },
-      ],
-    },
-    {
-      id: 2,
-      question: "According to the Ramayana, who among these was the brother of Ravana, the king of Lanka?",
-      answers: [
-        { text: "Meghnad", correct: false },
-        { text: "Vibhishana", correct: true },
-        { text: "Akshayakumara", correct: false },
-        { text: "Sugriva", correct: false },
-      ],
-    },
-    {
-      id: 3,
-      question: "Which of these colors is not present in the Indian national flag?",
-      answers: [
-        { text: "Saffron", correct: false },
-        { text: "White", correct: false },
-        { text: "Pink", correct: true },
-        { text: "Green", correct: false },
-      ],
-    },
-    {
-      id: 4,
-      question: "Which actor played the character of Gabbar Singh in the film 'Sholay'?",
-      answers: [
-        { text: "Amrish Puri", correct: false },
-        { text: "Amjad Khan", correct: true },
-        { text: "Sanjeev Kumar", correct: false },
-        { text: "Pran", correct: false },
-      ],
-    },
-    {
-      id: 5,
-      question: "Which of these rivers is also known as the 'Ganges of the South'?",
-      answers: [
-        { text: "Krishna", correct: false },
-        { text: "Kaveri", correct: false },
-        { text: "Narmada", correct: false },
-        { text: "Godavari", correct: true },
-      ],
-    },
-    {
-      id: 6,
-      question: "Who was awarded 'Man of the Match' in the 2011 Cricket World Cup final?",
-      answers: [
-        { text: "Gautam Gambhir", correct: false },
-        { text: "Sachin Tendulkar", correct: false },
-        { text: "M. S. Dhoni", correct: true },
-        { text: "Yuvraj Singh", correct: false },
-      ],
-    },
-    {
-      id: 7,
-      question: "From which ancient Indian scripture is our national motto 'Satyameva Jayate' taken?",
-      answers: [
-        { text: "Rigveda", correct: false },
-        { text: "Bhagavad Gita", correct: false },
-        { text: "Ramayana", correct: false },
-        { text: "Mundaka Upanishad", correct: true },
-      ],
-    },
-    {
-      id: 8,
-      question: "Who was the first non-Indian to be awarded the Bharat Ratna?",
-      answers: [
-        { text: "Nelson Mandela", correct: false },
-        { text: "Khan Abdul Ghaffar Khan", correct: true },
-        { text: "Mother Teresa", correct: false },
-        { text: "Dalai Lama", correct: false },
-      ],
-    },
-    {
-      id: 9,
-      question: "Which planet in our solar system has the most natural satellites (moons)?",
-      answers: [
-        { text: "Jupiter", correct: false },
-        { text: "Saturn", correct: true },
-        { text: "Uranus", correct: false },
-        { text: "Neptune", correct: false },
-      ],
-    },
-    {
-      id: 10,
-      question: "In the context of computers, what is the full form of 'URL'?",
-      answers: [
-        { text: "Universal Request Link", correct: false },
-        { text: "Uniform Resource Locator", correct: true },
-        { text: "United Resource Link", correct: false },
-        { text: "Universal Record Locator", correct: false },
-      ],
-    },
-    {
-      id: 11,
-      question: "In the Mahabharata, what was the name of Guru Dronacharya's son, who was also a great warrior?",
-      answers: [
-        { text: "Ghatotkacha", correct: false },
-        { text: "Abhimanyu", correct: false },
-        { text: "Ashwatthama", correct: true },
-        { text: "Duryodhana", correct: false },
-      ],
-    },
-    {
-      id: 12,
-      question: "Which Indian city is called the 'Queen of the Arabian Sea'?",
-      answers: [
-        { text: "Mumbai", correct: false },
-        { text: "Goa", correct: false },
-        { text: "Kochi", correct: true },
-        { text: "Mangaluru", correct: false },
-      ],
-    },
-    {
-      id: 13,
-      question: "Who is the author of the famous book 'The Discovery of India'?",
-      answers: [
-        { text: "Mahatma Gandhi", correct: false },
-        { text: "Sardar Patel", correct: false },
-        { text: "Subhas Chandra Bose", correct: false },
-        { text: "Jawaharlal Nehru", correct: true },
-      ],
-    },
-    {
-      id: 14,
-      question: "What was the name of the lander that successfully landed on the moon in the Chandrayaan-3 mission?",
-      answers: [
-        { text: "Pragyan", correct: false },
-        { text: "Vikram", correct: true },
-        { text: "Aditya", correct: false },
-        { text: "Dhruv", correct: false },
-      ],
-    },
-    {
-      id: 15,
-      question: "Who was the first governor of the Reserve Bank of India (RBI)?",
-      answers: [
-        { text: "C. D. Deshmukh", correct: false },
-        { text: "Sir Osborne Smith", correct: true },
-        { text: "Raghuram Rajan", correct: false },
-        { text: "Manmohan Singh", correct: false },
-      ],
-    },
-  ];
+  // API se questions fetch karne ke liye useEffect
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("https://the-trivia-api.com/v2/questions");
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const questions = await response.json();
+        const formattedQuestions = questions.map((q) => {
+          const incorrectAnswers = q.incorrectAnswers.map((text) => ({ text, correct: false }));
+          const correctAnswer = { text: q.correctAnswer, correct: true };
+          const allAnswers = [...incorrectAnswers, correctAnswer].sort(() => Math.random() - 0.5);
+          return {
+            id: q.id,
+            question: q.question.text,
+            answers: allAnswers,
+          };
+        });
+        setData(formattedQuestions);
+      } catch (error) {
+        console.error("API se questions fetch karne mein error:", error);
+        setData([]); // Error hone par data ko khali kar dein
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (username) {
+      fetchQuestions();
+    }
+  }, [username]);
+
 
   const moneyPyramid = useMemo(
     () =>
@@ -205,8 +89,8 @@ function App() {
   }, [questionNumber, moneyPyramid]);
 
   useEffect(() => {
-    if (stop && questionNumber > 0) {
-      const currentQuestion = data.find(q => q.id === questionNumber);
+    if (stop && questionNumber > 0 && data.length > 0) {
+      const currentQuestion = data[questionNumber - 1];
       if (currentQuestion) {
         const correctAnswer = currentQuestion.answers.find(ans => ans.correct);
         if (correctAnswer) {
@@ -217,12 +101,11 @@ function App() {
   }, [stop, questionNumber, data]);
 
   useEffect(() => {
-    if (questionNumber > 15) {
+    if (data.length > 0 && questionNumber > data.length) {
       setStop(true);
     }
-  }, [questionNumber]);
+  }, [questionNumber, data.length]);
 
-  // Reset fifty-fifty trigger for new question
   useEffect(() => {
     setFiftyFiftyTrigger(false);
   }, [questionNumber]);
@@ -241,13 +124,15 @@ function App() {
       ) : (
         <>
           <div className="main">
-            {stop ? (
+            {loading ? (
+              <h1 className="endText"></h1>
+            ) : stop ? (
               <div className="endScreenContainer">
                 <CelebrationConfetti />
-                <h1 className="endText">You earned: {earned}</h1>
+                <h1 className="endText">Aapne jeete: {earned}</h1>
                 {correctAnswerText && (
                   <h2 className="correctAnswerText">
-                    The correct answer was: {correctAnswerText}
+                    Sahi jawaab tha: {correctAnswerText}
                   </h2>
                 )}
               </div>
@@ -258,7 +143,7 @@ function App() {
                     <Timer setStop={setStop} questionNumber={questionNumber} />
                   </div>
                   <div className="lifelines">
-                    <div 
+                    <div
                       className={`lifeline ${lifelines.fiftyFifty === 0 && 'used'}`}
                       onClick={handleFiftyFifty}
                     >
@@ -267,13 +152,19 @@ function App() {
                   </div>
                 </div>
                 <div className="bottom">
-                  <Trivia
-                    data={data}
-                    setStop={setStop}
-                    questionNumber={questionNumber}
-                    setQuestionNumber={setQuestionNumber}
-                    fiftyFiftyTrigger={fiftyFiftyTrigger}
-                  />
+                  {data.length > 0 ? (
+                    <Trivia
+                      data={data}
+                      setStop={setStop}
+                      questionNumber={questionNumber}
+                      setQuestionNumber={setQuestionNumber}
+                      fiftyFiftyTrigger={fiftyFiftyTrigger}
+                    />
+                  ) : (
+                    <h1 className="endText">
+                      Prashna load karne mein samasya aa rahi hai. Kripya dobara koshish karein.
+                    </h1>
+                  )}
                 </div>
               </>
             )}

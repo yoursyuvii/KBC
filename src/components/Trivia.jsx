@@ -1,6 +1,4 @@
-// file: src/components/Trivia.jsx
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import useSound from "use-sound";
 import play from "../assets/play.wav";
 import correct from "../assets/correct.wav";
@@ -12,12 +10,13 @@ export default function Trivia({
     setStop,
     questionNumber,
     setQuestionNumber,
-    fiftyFiftyTrigger, // Prop to know when to apply 50:50
+    fiftyFiftyTrigger,
 }) {
     const [question, setQuestion] = useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [className, setClassName] = useState("answer");
     const [answers, setAnswers] = useState([]);
+    const timeoutRef = useRef([]);
 
     const [letsPlay] = useSound(play);
     const [correctAnswerSound] = useSound(correct);
@@ -25,36 +24,55 @@ export default function Trivia({
     const [waitSound, { stop: stopWaitSound }] = useSound(wait);
 
     useEffect(() => {
-        const currentQuestion = data[questionNumber - 1];
-        setQuestion(currentQuestion);
-        setAnswers(currentQuestion.answers); // Set initial answers
-        letsPlay();
-        waitSound();
-    }, [data, questionNumber, letsPlay, waitSound]);
+        return () => {
+            timeoutRef.current.forEach(clearTimeout);
+        };
+    }, []);
 
-    // This effect handles the 50:50 lifeline
+    useEffect(() => {
+        if (data.length > 0) {
+            const currentQuestion = data[questionNumber - 1];
+            if (currentQuestion) {
+                setQuestion(currentQuestion);
+                setAnswers(currentQuestion.answers);
+                letsPlay();
+                waitSound();
+            } else {
+                // Agar question na mile toh game stop kar dein
+                setStop(true);
+            }
+        }
+    }, [data, questionNumber, letsPlay, waitSound, setStop]);
+
     useEffect(() => {
         if (fiftyFiftyTrigger && question) {
-            const correctAnswer = question.answers.find(a => a.correct);
-            const incorrectAnswers = question.answers.filter(a => !a.correct);
-            
-            // Randomly pick one incorrect answer to keep
-            const randomIncorrect = incorrectAnswers[Math.floor(Math.random() * incorrectAnswers.length)];
-            
-            // Create the new set of answers (correct + one incorrect)
-            const newAnswers = [correctAnswer, randomIncorrect].sort(() => Math.random() - 0.5);
-            
-            setAnswers(newAnswers);
+            const correctAnswer = question.answers.find((a) => a.correct);
+            // Get all incorrect answers
+            const incorrectAnswers = question.answers.filter((a) => !a.correct);
+
+            // We only use the lifeline if there are at least 2 incorrect answers to remove from
+            if (incorrectAnswers.length >= 2) {
+                // Shuffle the incorrect answers
+                const shuffledIncorrect = [...incorrectAnswers].sort(() => Math.random() - 0.5);
+                
+                // Keep only one incorrect answer
+                const incorrectToKeep = shuffledIncorrect[0];
+
+                // Create the new set of answers
+                const newAnswers = [correctAnswer, incorrectToKeep].sort(() => Math.random() - 0.5);
+
+                setAnswers(newAnswers);
+            }
         }
     }, [fiftyFiftyTrigger, question]);
 
-
     const delay = (duration, callback) => {
-        setTimeout(callback, duration);
+        const timer = setTimeout(callback, duration);
+        timeoutRef.current.push(timer);
     };
 
     const handleClick = (a) => {
-        if (selectedAnswer) return; // Prevent clicking after an answer is selected
+        if (selectedAnswer) return;
 
         setSelectedAnswer(a);
         setClassName("answer active");
@@ -65,7 +83,7 @@ export default function Trivia({
                 setClassName("answer correct");
                 correctAnswerSound();
                 delay(2000, () => {
-                    if (questionNumber === 15) {
+                    if (questionNumber === data.length) {
                         setStop(true);
                     } else {
                         setQuestionNumber((prev) => prev + 1);
