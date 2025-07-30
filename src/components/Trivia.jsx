@@ -11,6 +11,7 @@ export default function Trivia({
     questionNumber,
     setQuestionNumber,
     fiftyFiftyTrigger,
+    setAnsweredQuestions,
 }) {
     const [question, setQuestion] = useState(null);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -36,35 +37,35 @@ export default function Trivia({
                 setQuestion(currentQuestion);
                 setAnswers(currentQuestion.answers);
                 letsPlay();
-                waitSound();
             } else {
                 // Agar question na mile toh game stop kar dein
                 setStop(true);
             }
         }
-    }, [data, questionNumber, letsPlay, waitSound, setStop]);
+    }, [data, questionNumber, letsPlay, setStop]);
 
     useEffect(() => {
         if (fiftyFiftyTrigger && question) {
             const correctAnswer = question.answers.find((a) => a.correct);
-            // Get all incorrect answers
             const incorrectAnswers = question.answers.filter((a) => !a.correct);
 
-            // We only use the lifeline if there are at least 2 incorrect answers to remove from
             if (incorrectAnswers.length >= 2) {
-                // Shuffle the incorrect answers
                 const shuffledIncorrect = [...incorrectAnswers].sort(() => Math.random() - 0.5);
-                
-                // Keep only one incorrect answer
-                const incorrectToKeep = shuffledIncorrect[0];
-
-                // Create the new set of answers
-                const newAnswers = [correctAnswer, incorrectToKeep].sort(() => Math.random() - 0.5);
-
+                const incorrectToKeep = shuffledIncorrect.slice(0, 1);
+                const newAnswers = [correctAnswer, ...incorrectToKeep].sort(() => Math.random() - 0.5);
                 setAnswers(newAnswers);
             }
         }
     }, [fiftyFiftyTrigger, question]);
+
+    useEffect(() => {
+        if (question && !selectedAnswer) {
+            waitSound();
+        }
+        return () => {
+            stopWaitSound();
+        };
+    }, [question, selectedAnswer, waitSound, stopWaitSound]);
 
     const delay = (duration, callback) => {
         const timer = setTimeout(callback, duration);
@@ -74,9 +75,11 @@ export default function Trivia({
     const handleClick = (a) => {
         if (selectedAnswer) return;
 
+        stopWaitSound(); // Stop the wait sound immediately
         setSelectedAnswer(a);
         setClassName("answer active");
-        stopWaitSound();
+
+        setAnsweredQuestions(prev => [...prev, { question, answered: a.text }]);
 
         delay(3000, () => {
             if (a.correct) {

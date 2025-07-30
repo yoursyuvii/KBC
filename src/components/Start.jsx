@@ -1,21 +1,32 @@
-import { useRef } from "react";
-import useSound from "use-sound";
-import play from "../assets/play.wav";
+import { useEffect, useRef } from "react";
+import useSound from 'use-sound';
+import wait from '../assets/wait.wav';
 
-export default function Start({ setUsername }) {
+function Start({ setUsername, setView, isGameStarted }) {
   const inputRef = useRef();
-  const [playGame] = useSound(play);
+  const [playWait, { stop }] = useSound(wait, { loop: true });
+
+  useEffect(() => {
+    if (!isGameStarted) {
+      playWait();
+    }
+    return () => stop();
+  }, [playWait, stop, isGameStarted]);
 
   const handleClick = () => {
     if (inputRef.current.value) {
-      playGame();
+      stop();
       setUsername(inputRef.current.value);
+      setView('game');
+    } else {
+      alert("Please enter your name to start!");
     }
   };
 
   return (
-    <div className="start">
-        <h1 className="startTitle">KBC By YUVRAJ</h1>
+    <div className="start-container">
+      <div className="start">
+        <h1 className="startTitle">आपका हार्दिक स्वागत हैं।</h1>
         <input
           placeholder="Write your good name."
           className="startInput"
@@ -25,5 +36,11 @@ export default function Start({ setUsername }) {
           START
         </button>
       </div>
+      <footer className="landing-footer">
+        Made with ❤️ by <a href="https://www.linkedin.com/in/yoursyuvii/" target="_blank" rel="noopener noreferrer">yoursyuvii</a>
+      </footer>
+    </div>
   );
 }
+
+export default Start;
