@@ -5,6 +5,7 @@ import Timer from "./components/Timer";
 import LandingPage from "./components/LandingPage";
 import Start from "./components/Start";
 import EndScreen from "./components/EndScreen";
+import Cursor from "./components/Cursor";
 
 function App() {
   // View management state - yahi control karta hai ki kaun sa page dikhega
@@ -170,7 +171,12 @@ function App() {
     }
   };
 
-  return <div className="app">{renderContent()}</div>;
+  return (
+    <div className="app">
+      <Cursor />
+      {renderContent()}
+    </div>
+  );
 }
 
 export default App;

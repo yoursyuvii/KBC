@@ -1,0 +1,51 @@
+// Sabse pehle, default browser cursor ko hide kar dein
+body {
+    cursor: none;
+  }
+  
+  // Main custom cursor ke liye styles
+  .custom-cursor {
+    position: fixed; // Screen par fixed rahega
+    font-size: 2.5rem; // Cursor ka size
+    color: #FFD700; // Sunehra (Gold) rang
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.7); // Glow effect
+    pointer-events: none; // Taaki cursor ke neeche ke elements click ho sakein
+    z-index: 9999; // Hamesha sabse upar rahega
+    transform: translate(-50%, -50%); // Cursor ko center mein align karein
+    transition: transform 0.1s ease-out; // Movement ko smooth banayein
+  }
+  
+  // Trail particles ke liye styles
+  .trail {
+    position: fixed;
+    font-size: 1.8rem; // Trail particles ka size
+    color: #FFD700;
+    pointer-events: none;
+    z-index: 9998; // Main cursor ke theek peeche
+    // Animation ka naam, duration, aur timing function
+    animation: fallAndFade 1s forwards ease-out;
+  }
+  
+  // "Luratne" aur fade hone ka animation
+  @keyframes fallAndFade {
+    from {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    to {
+      opacity: 0;
+      // Particle neeche girega, chhota hoga, aur rotate karega
+      transform: translate(-50%, 150px) scale(0.3) rotate(180deg);
+    }
+  }
+  
+  // Chhote screens par default cursor dikhayein, kyunki custom cursor ajeeb lag sakta hai
+  @media (max-width: 768px) {
+    body {
+      cursor: auto;
+    }
+    .custom-cursor, .trail {
+      display: none;
+    }
+  }
+  
