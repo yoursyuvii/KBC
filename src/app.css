@@ -1187,10 +1187,15 @@ animation: wrong 3s ease forwards;
 }
 
 .logo-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #ffd700;
-    margin-bottom: 20px;
+  width: 100px;
+  height: 100px;
+  border-radius: 40%;
+  object-fit: cover;
+  border: 3px solid #edd560;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* बॉक्स-शैडो के लिए भी ट्रांजिशन जोड़ा गया */
+}
+.logo-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #edd560; /* होवर पर पीले रंग की चमक */
 }

@@ -22,7 +22,7 @@ function LandingPage({ setView, user, handleLogout }) {
         </div>
       </div>
       
-      <img src="/YSlogo.png" alt="YS Logo" className="logo-image" />
+      <a href="https://portfolio-blush-kappa-93.vercel.app/"><img src="/namelogo.png" alt="namelogo" className="logo-image" /></a>
 
       <footer className="landing-footer">
         Made with ❤️ by <a href="https://www.linkedin.com/in/yoursyuvii/" target="_blank" rel="noopener noreferrer">yoursyuvii</a>
